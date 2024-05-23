@@ -1,0 +1,67 @@
+﻿@using MyBlazor.Libraries.Product.Models;
+@using MyBlazor.Libraries.ShoppingCart;
+@inject IShoppingCartService shoppingCartService
+@implements IProductAddToCart
+
+<div class="card col-3 m-2" style="width: 18rem;padding:0">
+    <img src="/Images/@Product?.Image" style="width:100%" class="card-img-top" alt="...">
+    <div class="card-body">
+        <a href="@Product.FullUrl">
+            <h5 class="card-title">@Product.Name</h5>
+        </a>
+        <p class="card-text">قیمت : @Product.Price</p>
+        <div>
+            <input @bind="Quantity" type="number" placeholder="تعداد؟" class="form-control" />
+
+            <button class="btn btn-outline-success mt-2" @onclick="AddToCart">
+                @if (shoppingCartService.HasProduct(Product.Sku))
+                {
+                    <span>
+                        اضافه به سبد خرید
+                        @if (Quantity.HasValue)
+                        {
+                            <text>@Quantity بیشترش کن</text>
+                        }
+                    </span>
+                }
+                else
+                {
+                    <span>
+                        اولین خریدت رو انجام بده
+                    </span>
+                }
+            </button>
+        </div>
+        <a href="#" class="btn btn-primary">نمایش جزیات</a>
+    </div>
+</div>
+@code {
+
+    [Parameter]
+    public ProductModel? Product { get; set; }
+
+    public int? Quantity { get; set; }
+
+
+    // [SupplyParameterFromQuery]
+    // [Parameter, SupplyParameterFromQuery]
+    // [Parameter, SupplyParameterFromQuery(Name ="SeneKarber")]
+    // public string Age { get; set; }
+
+    // protected override void OnParametersSet()
+    // {
+    //     base.OnParametersSet();
+    // }
+}
+
+@functions
+{
+    public void AddToCart()
+    {
+        if (Product != null)
+        {
+            shoppingCartService.AddProduct(Product, Quantity ?? 1);
+            Quantity = null;
+        }
+    }
+}
