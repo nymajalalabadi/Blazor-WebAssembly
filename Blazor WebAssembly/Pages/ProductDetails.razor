@@ -34,29 +34,34 @@ else
                 {
                     <p>اقلام موجود در سبد خرید : @shoppingCartService.Count() می باشد</p>
                 }
+
+                <EditForm Model="productAddToCartModel" OnValidSubmit="AddToCart">
                 <div class="col-4">
-                    <input @bind="Quantity" @bind:event="oninput" type="number" placeholder="تعداد؟" class="form-control" />
+                    <DataAnnotationsValidator />
+                    <ValidationMessage For="() => productAddToCartModel.Quantity" />
+                    <InputNumber @bind-Value="productAddToCartModel.Quantity" class="form-control" placeholder="تعداد؟" />
                 </div>
-                <div class="col-3">
-                    <button class="btn btn-outline-primary" @onclick="AddToCart">
-                        @if (shoppingCartService.HasProduct(Product.Sku))
-                        {
-                            <span>
-                                اضافه به سبد خرید
-                                @if (Quantity.HasValue)
-                                {
-                                    <text>@Quantity بیشترش کن</text>
-                                }
-                            </span>
-                        }
-                        else
-                        {
-                            <span>
-                                اولین خریدت رو انجام بده
-                            </span>
-                        }
-                    </button>
-                </div>
+                    <div class="col-3">
+                        <button class="btn btn-outline-primary">
+                            @if (shoppingCartService.HasProduct(Product.Sku))
+                            {
+                                <span>
+                                    اضافه به سبد خرید
+                                    @if (productAddToCartModel.Quantity.HasValue)
+                                    {
+                                        <text>@productAddToCartModel.Quantity بیشترش کن</text>
+                                    }
+                                </span>
+                            }
+                            else
+                            {
+                                <span>
+                                    اولین خریدت رو انجام بده
+                                </span>
+                            }
+                        </button>
+                    </div>
+                </EditForm>
             </div>
             <ul>
                 @foreach (var product in ListProduct)
@@ -82,7 +87,7 @@ else
     [Parameter]
     public string? slug { get; set; }
 
-    public int? Quantity { get; set; }
+    ProductAddToCartModel productAddToCartModel = new ProductAddToCartModel();
 
 }
 
@@ -114,8 +119,8 @@ else
     {
         if (Product != null)
         {
-            shoppingCartService.AddProduct(Product, Quantity ?? 1);
-            Quantity = null;
+            shoppingCartService.AddProduct(Product, productAddToCartModel.Quantity ?? 1);
+            productAddToCartModel.Quantity = null;
         }
     }
 }
