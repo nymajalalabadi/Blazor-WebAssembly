@@ -1,5 +1,6 @@
 ﻿@page "/cart"
 @using MyBlazor.Libraries.ShoppingCart;
+@using MyBlazor.Libraries.ShoppingCart.Models;
 @inject IShoppingCartService shoppingCartService
 
 <PageTitle>سبد خرید</PageTitle>
@@ -29,3 +30,8 @@
         </table>
     }
 </div>
+
+@code{
+    [CascadingParameter(Name = "ShopingCartCountModel")]
+    private ShopingCartCountModel? shopingCartCountModel { get; set; }
+}

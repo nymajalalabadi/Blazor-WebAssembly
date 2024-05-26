@@ -2,6 +2,7 @@
 @using MyBlazor.Libraries.Product;
 @using MyBlazor.Libraries.Product.Models;
 @using MyBlazor.Libraries.ShoppingCart;
+@using MyBlazor.Libraries.ShoppingCart.Models;
 @inject IProductService productService
 @inject IShoppingCartService shoppingCartService
 
@@ -88,6 +89,9 @@ else
     public string? slug { get; set; }
 
     ProductAddToCartModel productAddToCartModel = new ProductAddToCartModel();
+
+    [CascadingParameter(Name = "ShopingCartCountModel")]
+    private ShopingCartCountModel? shopingCartCountModel { get; set; }
 
 }
 

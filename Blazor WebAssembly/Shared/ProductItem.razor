@@ -1,5 +1,6 @@
 ﻿@using MyBlazor.Libraries.Product.Models;
 @using MyBlazor.Libraries.ShoppingCart;
+@using MyBlazor.Libraries.ShoppingCart.Models;
 @inject IShoppingCartService shoppingCartService
 @implements IProductAddToCart
 
@@ -42,6 +43,8 @@
 
     public int? Quantity { get; set; }
 
+    [CascadingParameter(Name = "ShopingCartCountModel")]
+    private ShopingCartCountModel? shopingCartCountModel { get; set; }
 
     // [SupplyParameterFromQuery]
     // [Parameter, SupplyParameterFromQuery]
