@@ -16,7 +16,7 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<None Update="Shared\NavMenu.razor.css" CssScope="nav-menu"/>
+		<None Update="Shared\NavMenu.razor.css" CssScope="nav-menu" />
 	</ItemGroup>
 
 </Project>
