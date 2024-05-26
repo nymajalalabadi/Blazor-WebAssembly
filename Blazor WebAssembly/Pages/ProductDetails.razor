@@ -125,6 +125,11 @@ else
         {
             shoppingCartService.AddProduct(Product, productAddToCartModel.Quantity ?? 1);
             productAddToCartModel.Quantity = null;
+
+            if (shopingCartCountModel != null)
+            {
+                shopingCartCountModel.OnCountChange();
+            }
         }
     }
 }

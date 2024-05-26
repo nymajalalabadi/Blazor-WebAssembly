@@ -14,6 +14,7 @@
                 <th>تعداد</th>
                 <th>قیمت</th>
                 <th>جمع</th>
+                <th>حذف از سبد خرید</th>
             </tr>
             @foreach (var item in shoppingCartService.Get().Items)
             {
@@ -25,6 +26,9 @@
                     <td>@item.Quantity</td>
                     <td>@item.Price</td>
                     <td>@item.TotalPrice</td>
+                    <td>
+                        <button class="btn btn-outline-danger" @onclick="() => DeleteItem(item)">X</button>
+                    </td>
                 </tr>
             }
         </table>
@@ -34,4 +38,16 @@
 @code{
     [CascadingParameter(Name = "ShopingCartCountModel")]
     private ShopingCartCountModel? shopingCartCountModel { get; set; }
+}
+
+@functions{
+    private void DeleteItem(ShoppingCartItemModel item)
+    {
+        shoppingCartService.DeleteProduct(item);
+
+        if (shopingCartCountModel != null)
+        {
+            shopingCartCountModel.OnCountChange();
+        }
+    }
 }
