@@ -1,11 +1,32 @@
 ﻿@page "/cart"
+@using Blazor_WebAssembly.Components;
+@using Blazor_WebAssembly.Shared.Template
 @using MyBlazor.Libraries.ShoppingCart;
 @using MyBlazor.Libraries.ShoppingCart.Models;
 @inject IShoppingCartService shoppingCartService
 
 <PageTitle>سبد خرید</PageTitle>
 <div class="row">
-    @if (shoppingCartService.Get().Items.Any())
+    <TableTemplate HeaderNames="@tableHeaderNames">
+        <RowTemplate>
+            @foreach (var item in shoppingCartService.Get().Items)
+            {
+                <tr>
+                    <td colspan="2">
+                        <img src="/Images/@item.Product.Image" style="max-width:120px" class="card-img-top" alt="@item.Product.Name<">
+                    </td>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Price</td>
+                    <td>@item.TotalPrice</td>
+                    <td>
+                        <button class="btn btn-outline-danger" @onclick="() => DeleteItem(item)">X</button>
+                    </td>
+                </tr>
+            }
+        </RowTemplate>
+    </TableTemplate>
+    @* @if (shoppingCartService.Get().Items.Any())
     {
         <table class="table table-bordered table-striped">
             <tr>
@@ -32,12 +53,22 @@
                 </tr>
             }
         </table>
-    }
+    } *@
 </div>
 
 @code{
     [CascadingParameter(Name = "ShopingCartCountModel")]
     private ShopingCartCountModel? shopingCartCountModel { get; set; }
+
+    List<TableHeaderName> tableHeaderNames = new()
+    {
+        new TableHeaderName("تصویر",2),
+        new TableHeaderName("نام",1),
+        new TableHeaderName("تعداد",1),
+        new TableHeaderName("قیمت",1),
+        new TableHeaderName("جمع",1),
+        new TableHeaderName("حذف از سبد خرید",1)
+    };
 }
 
 @functions{
