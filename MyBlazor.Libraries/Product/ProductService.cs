@@ -1,5 +1,6 @@
 ﻿using MyBlazor.Libraries.Product.Models;
 using MyBlazor.Libraries.Storage;
+using System.Drawing;
 
 namespace MyBlazor.Libraries.Product
 {
@@ -25,6 +26,18 @@ namespace MyBlazor.Libraries.Product
         {
             return _storageService.products.FirstOrDefault(x => x.Slug == slug);
         }
-    }
 
+        public IList<ProductModel> GetAll(int size, int pageId = 1)
+        {
+            var skip = size * (pageId - 1);
+            return _storageService.products.Skip(skip).Take(size).ToList();
+        }
+
+        public int GetTotalPageCount(int size)
+        {
+            var count = _storageService.products.Count;
+
+            return count > 0 ? (int)Math.Ceiling((decimal) count / size) : 1;
+        }
+    }
 }

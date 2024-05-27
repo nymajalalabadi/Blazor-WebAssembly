@@ -19,6 +19,7 @@
 @if (Products?.Any() ?? false)
 {
     <h2>آخرین محصولات ما</h2>
+    <a></a>
     <hr />
     <div class="row">
         @foreach (var product in Products)
@@ -26,15 +27,49 @@
             <ProductItem Product="product" />
         }
     </div>
+    <div class="row">
+        @if (TotalPageCount > 1)
+        {
+            <ul class="pagination">
+                @for (int page = 1; page <= TotalPageCount; page++)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@navigationManager.GetUriWithQueryParameter("page",page)">@(page)</a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
 }
 
 @code {
     public IList<ProductModel>? Products { get; set; }
 
+    [Parameter, SupplyParameterFromQuery]
+    public int? Page { get; set; }
+
+    public int? TotalPageCount { get; set; }
+
     protected override void OnInitialized()
     {
-        Products = productService.GetAll();
         base.OnInitialized();
     }
 
+}
+
+@functions
+{
+    protected override void OnParametersSet()
+    {
+        //int pagesSize = int.Parse(configuration["ProductListing:PageSize"]);
+        var productConfig = configuration.GetSection("ProductListing");
+
+        var pageSize = productConfig.GetValue<int>("PageSize");
+
+        Products = productService.GetAll(pageSize, Page ?? 1);
+
+        TotalPageCount = productService.GetTotalPageCount(pageSize);
+
+        base.OnParametersSet();
+    }
 }
