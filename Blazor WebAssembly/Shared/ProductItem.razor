@@ -2,6 +2,7 @@
 @using MyBlazor.Libraries.ShoppingCart;
 @using MyBlazor.Libraries.ShoppingCart.Models;
 @inject IShoppingCartService shoppingCartService
+@inject NavigationManager navigationManager;
 @implements IProductAddToCart
 
 <div class="card col-3 m-2" style="width: 18rem;padding:0">
@@ -71,5 +72,7 @@
                 shopingCartCountModel.OnCountChange();
             }
         }
+
+        navigationManager.NavigateTo("/cart");
     }
 }
