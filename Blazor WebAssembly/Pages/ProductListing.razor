@@ -1,10 +1,20 @@
 ﻿@page "/"
 @using MyBlazor.Libraries.Product;
 @using MyBlazor.Libraries.Product.Models;
+@inject NavigationManager navigationManager;
+@inject IConfiguration configuration
 @inject IProductService productService
 
 
 <PageTitle>لیست محصولات</PageTitle>
+<HeadContent>
+    <meta name="description" content="ایشون لیست محصولات هستند" />
+</HeadContent>
+
+<Ads Title="@configuration["Ads:Name"]"
+     Description="@configuration["Ads:Description"]"
+     Image="@configuration["Ads:Image"]"
+     Background="" />
 
 @if (Products?.Any() ?? false)
 {
