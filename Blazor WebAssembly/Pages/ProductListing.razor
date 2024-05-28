@@ -1,10 +1,9 @@
 ﻿@page "/"
 @using MyBlazor.Libraries.Product;
 @using MyBlazor.Libraries.Product.Models;
-@inject NavigationManager navigationManager;
+@inject NavigationManager navigationManager
 @inject IConfiguration configuration
 @inject IProductService productService
-
 
 <PageTitle>لیست محصولات</PageTitle>
 <HeadContent>
@@ -14,7 +13,7 @@
 <Ads Title="@configuration["Ads:Name"]"
      Description="@configuration["Ads:Description"]"
      Image="@configuration["Ads:Image"]"
-     Background="" />
+     Background="@configuration["Ads:BackgroundColor"]" />
 
 @if (Products?.Any() ?? false)
 {
