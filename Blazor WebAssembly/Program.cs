@@ -17,11 +17,28 @@ var httpClient = new HttpClient
 builder.Services.AddScoped(h => httpClient);
 
 using var response = await httpClient.GetAsync("ProductSettings.json");
-//using var response = await httpClient.GetAsync("BlogSettings.json");
 
 using var stream = await response.Content.ReadAsStreamAsync();
 
 builder.Configuration.AddJsonStream(stream);
+
+
+#region Production
+
+using var responseP = await httpClient.GetAsync("ProductSettings."
+    +
+    builder.HostEnvironment.IsEnvironment
+    +
+    ".json");
+
+if (response.IsSuccessStatusCode)
+{
+    using var streamP = await responseP.Content.ReadAsStreamAsync();
+
+    builder.Configuration.AddJsonStream(streamP);
+}
+
+#endregion
 
 builder.Services.AddSingleton<IStorageService, StorageService>();
 builder.Services.AddTransient<IProductService, ProductService>();
