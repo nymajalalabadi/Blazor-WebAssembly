@@ -1,5 +1,8 @@
 ﻿@using Blazor_WebAssembly.Components;
-
+@using Blazor_WebAssembly.Pages;
+@using Microsoft.Extensions.Localization;
+@using System.Globalization;
+@inject IStringLocalizer<ShoppingCart> _localizer
 
 <table class="table table-bordered table-striped">
     @if (HeaderNames?.Any() ?? false)
@@ -9,7 +12,7 @@
                 @foreach (var item in HeaderNames)
                 {
                     <th colspan="@item.Colspan" scope="col">
-                        @item.Name
+                        @_localizer[item.Name]
                     </th>
                 }
             </tr>

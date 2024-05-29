@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.23" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.23" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.Extensions.Localization" Version="6.0.23" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,5 +19,9 @@
 	<ItemGroup>
 		<None Update="Shared\NavMenu.razor.css" CssScope="nav-menu" />
 	</ItemGroup>
-
+	
+        <PropertyGroup>
+		<BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+	</PropertyGroup>	
+	
 </Project>

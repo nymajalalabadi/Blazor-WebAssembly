@@ -1,13 +1,16 @@
 ﻿@page "/cart"
 @using Blazor_WebAssembly.Components;
 @using Blazor_WebAssembly.Shared.Template
+@using Microsoft.Extensions.Localization;
 @using MyBlazor.Libraries.ShoppingCart;
 @using MyBlazor.Libraries.ShoppingCart.Models;
+@using System.Globalization;
 @inject IShoppingCartService shoppingCartService
+@inject IStringLocalizer<ShoppingCart> _localizer
 
-
-<PageTitle>سبد خرید</PageTitle>
+<PageTitle>@_localizer["Title"]</PageTitle>
 <div class="row">
+    <h1>@_localizer["Title"]</h1>
     <TableTemplate HeaderNames="@tableHeaderNames">
         <RowTemplate>
             @foreach (var item in shoppingCartService.Get().Items)
@@ -63,12 +66,12 @@
 
     List<TableHeaderName> tableHeaderNames = new()
     {
-        new TableHeaderName("تصویر",2),
-        new TableHeaderName("نام",1),
-        new TableHeaderName("تعداد",1),
-        new TableHeaderName("قیمت",1),
-        new TableHeaderName("جمع",1),
-        new TableHeaderName("حذف از سبد خرید",1)
+        new TableHeaderName("Image",2),
+        new TableHeaderName("Name",1),
+        new TableHeaderName("Count",1),
+        new TableHeaderName("Price",1),
+        new TableHeaderName("Jam",1),
+        new TableHeaderName("Delete",1)
     };
 }
 
